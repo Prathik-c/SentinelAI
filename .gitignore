@@ -216,3 +216,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/data/
+backend/snapshots/
+backend/known_faces/
+backend/.env
+
+# Node (frontend has its own .gitignore too, this is backup)
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
