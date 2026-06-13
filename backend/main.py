@@ -2,9 +2,11 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 import asyncio
-from routers import health
+from routers import health,face
 from services.health_service import get_health_metrics
 from config import HEALTH_INTERVAL
+from database import engine, Base
+from models import tables
 
 app = FastAPI(
     title="SentinelAI",
@@ -40,3 +42,7 @@ async def health_websocket(websocket: WebSocket):
             await asyncio.sleep(HEALTH_INTERVAL)
     except WebSocketDisconnect:
         pass
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(face.router)

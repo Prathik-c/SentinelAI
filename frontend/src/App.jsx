@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import HealthMonitor from "./components/HealthMonitor"
+import AlertPanel from "./components/AlertPanel"
 
 export default function App() {
   const [status, setStatus] = useState("checking...")
@@ -20,6 +21,9 @@ export default function App() {
       </p>
 
       <HealthMonitor />
+      <div className="mt-6">
+        <AlertPanel />
+      </div>
     </div>
   )
 }
