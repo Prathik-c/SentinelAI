@@ -1,5 +1,15 @@
 from models.tables import Incident
 from sqlalchemy.orm import Session
+import os
+from config import SNAPSHOTS_PATH
+
+def cleanup_old_snapshots(keep_last=20):
+    files = [f for f in os.listdir(SNAPSHOTS_PATH) if f.endswith(".jpg")]
+    files.sort(key=lambda f: os.path.getmtime(os.path.join(SNAPSHOTS_PATH, f)))
+
+    if len(files) > keep_last:
+        for f in files[:-keep_last]:
+            os.remove(os.path.join(SNAPSHOTS_PATH, f))
 
 def create_incident(db: Session, description: str, snapshot: str = None, severity: str = "medium"):
     incident = Incident(

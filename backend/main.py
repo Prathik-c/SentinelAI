@@ -2,11 +2,12 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 import asyncio
-from routers import health,face
+from routers import health, face
 from services.health_service import get_health_metrics
 from config import HEALTH_INTERVAL
 from database import engine, Base
 from models import tables
+from services.activity_service import start_activity_tracking
 
 app = FastAPI(
     title="SentinelAI",
@@ -22,7 +23,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+Base.metadata.create_all(bind=engine)
+
 app.include_router(health.router)
+app.include_router(face.router)
+
+
+async def periodic_health_logger():
+    from database import SessionLocal
+    from services.health_service import log_health_snapshot
+
+    print("DEBUG: periodic_health_logger started")
+    while True:
+        print("DEBUG: attempting to log health snapshot")
+        db = SessionLocal()
+        try:
+            log_health_snapshot(db)
+            print("DEBUG: log successful")
+        except Exception as e:
+            print("DEBUG: log FAILED:", e)
+        finally:
+            db.close()
+        await asyncio.sleep(60)
+
+
+@app.on_event("startup")
+async def start_background_tasks():
+    start_activity_tracking()
+    asyncio.create_task(periodic_health_logger())
 
 @app.get("/")
 def root():
@@ -42,7 +70,3 @@ async def health_websocket(websocket: WebSocket):
             await asyncio.sleep(HEALTH_INTERVAL)
     except WebSocketDisconnect:
         pass
-
-Base.metadata.create_all(bind=engine)
-
-app.include_router(face.router)

@@ -14,7 +14,8 @@ def check_face(frame):
             img_path=frame,
             db_path=KNOWN_FACES_PATH,
             enforce_detection=False,
-            silent=True
+            silent=True,
+            threshold=0.55
         )
 
         # result is a list of dataframes, one per detected face

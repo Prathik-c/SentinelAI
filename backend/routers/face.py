@@ -30,8 +30,10 @@ async def alerts_websocket(websocket: WebSocket, db: Session = Depends(get_db)):
         while True:
             if _monitoring:
                 frame = face_service.capture_frame()
+                print("DEBUG frame:", "captured" if frame is not None else "None")
                 if frame is not None:
                     result = face_service.check_face(frame)
+                    print("DEBUG result:", result)
 
                     if not result.get("recognized") and "error" not in result:
                         incident = alert_service.create_incident(
@@ -40,6 +42,7 @@ async def alerts_websocket(websocket: WebSocket, db: Session = Depends(get_db)):
                             snapshot=result.get("snapshot_path"),
                             severity="medium"
                         )
+                        alert_service.cleanup_old_snapshots(keep_last=20)
                         await websocket.send_json({
                             "id": incident.id,
                             "type": "face",
