@@ -8,6 +8,7 @@ from config import HEALTH_INTERVAL
 from database import engine, Base
 from models import tables
 from services.activity_service import start_activity_tracking
+from routers import health, face, chat
 
 app = FastAPI(
     title="SentinelAI",
@@ -27,7 +28,7 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(health.router)
 app.include_router(face.router)
-
+app.include_router(chat.router)
 
 async def periodic_health_logger():
     from database import SessionLocal

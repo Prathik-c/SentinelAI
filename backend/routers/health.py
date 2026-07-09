@@ -1,12 +1,11 @@
-
 from fastapi import APIRouter
 from services.health_service import get_health_metrics
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from database import get_db
-from models.tables import HealthLog
+from models.tables import HealthLog, Incident
 from services.llm_service import explain_anomalies
-
+from datetime import datetime, timedelta
 
 
 router = APIRouter(prefix="/health", tags=["Health"])
@@ -79,15 +78,15 @@ def get_baseline(db: Session = Depends(get_db)):
             for name, count in common_processes
         ]
     }
+
 @router.get("/anomaly/check")
 def check_anomaly(db: Session = Depends(get_db)):
     import json
 
-    
     all_logs = db.query(HealthLog).all()
 
     if len(all_logs) < 50:
-        return {"status": "learning", 
+        return {"status": "learning",
                 "message": "Still learning your patterns — check back after more data is collected"}
 
     cpu_values = [l.cpu for l in all_logs]
@@ -150,7 +149,7 @@ def check_anomaly(db: Session = Depends(get_db)):
                         "detail": f"Unfamiliar process '{p['name']}' using {p['cpu']}% CPU — not seen in your normal usage"
                     })
 
-        baseline_context = {
+    baseline_context = {
         "cpu_mean": round(cpu_mean, 1),
         "ram_mean": round(ram_mean, 1),
         "cpu_threshold": round(cpu_threshold, 1),
@@ -160,11 +159,43 @@ def check_anomaly(db: Session = Depends(get_db)):
 
     explanation = explain_anomalies(anomalies, baseline_context)
 
+    # --- Persist detected anomalies as incidents, with dedup guard ---
+    # Skip inserting if a pending incident of the same type was already
+    # logged in the last 5 minutes, to avoid spamming duplicate rows
+    # when this endpoint is polled repeatedly during an ongoing anomaly.
+    recent_cutoff = datetime.utcnow() - timedelta(minutes=5)
+    saved_incidents = []
+
+    for a in anomalies:
+        existing = db.query(Incident).filter(
+            Incident.type == a["type"],
+            Incident.status == "pending",
+            Incident.timestamp >= recent_cutoff
+        ).first()
+
+        if existing:
+            continue  # duplicate of a recent still-pending incident, skip
+
+        incident = Incident(
+            type=a["type"],
+            severity=a["severity"],
+            description=a["detail"],
+            snapshot=json.dumps(baseline_context),
+            status="pending",
+            report=explanation
+        )
+        db.add(incident)
+        saved_incidents.append(incident)
+
+    if saved_incidents:
+        db.commit()
+
     return {
         "status": "anomalies_found" if anomalies else "normal",
         "baseline_samples": len(all_logs),
         "your_normal": baseline_context,
         "anomaly_count": len(anomalies),
         "anomalies": anomalies,
-        "explanation": explanation      # LLM-generated plain English explanation
+        "explanation": explanation,      # LLM-generated plain English explanation
+        "incidents_saved": len(saved_incidents)
     }

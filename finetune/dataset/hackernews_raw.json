@@ -1,0 +1,422 @@
+[
+  {
+    "input": "Ask HN: I’m an FCC Commissioner proposing regulation of IoT security updates",
+    "output": "Hi everyone, I’m FCC Commissioner Nathan Simington, and I’m here to discuss security updates for IoT devices and how you can make a difference by filing comments with the FCC. As you know, serious vulnerabilities are common in IoT, and it often takes too long for these to be patched on end-user devices—if the manufacturer even bothers to release an update, and if the device was even designed to receive them. Companies may stop supporting a device well before consumers have stopped using it. The support period is often not communicated at the time of sale. And sometimes the end of support is not even announced, leaving even informed users unsure whether their devices are still safe. I’ve advocated for the FCC to require device manufacturers to support their devices with security updates for a reasonable amount of time [1]. I can&#x27;t bring such a proposal to a vote since I’m not the chairman of the agency. But I was able to convince my colleagues to tentatively support something a little more moderate addressing this problem. The FCC recently issued a Notice of Proposed Rulemaking [2] for a cybersecurity labeling program for connected devices. If they meet certain criteria for the",
+    "source": "hackernews",
+    "keyword": "security"
+  },
+  {
+    "input": "Ask HN: Gmail account security",
+    "output": "I have a gmail account that I rarely use, but I know the password. I enter it correctly and get the following message: You’re trying to sign in on a device Google doesn’t recognize, and we don’t have enough information to verify that it’s you. For your protection, you can’t sign in here right now. Try again from a device or location where you’ve signed in before. Even if I get the code from the recovery email account, it won&#x27;t work. Is this the AI hell Google throws you into if you get a new phone and computer in the same year? Has anyone else on HN run into this and found a solution?",
+    "source": "hackernews",
+    "keyword": "security"
+  },
+  {
+    "input": "How I Hacked Hacker News (with arc security advisory)",
+    "output": "[Condensed version of this narrative: the news.yc code, prior to the the release of arc3, contains a remotely-exploitable vulnerability permitting account theft. Anyone running a news installation who has not yet upgraded to arc3 should do so.] Hacker News login cookies are random eight-character strings, stored server-side in a hash table mapping them to user names. I discovered a few weeks ago that these strings were rather less random than they were meant to be, and, through a delightful combination of exploits, could be predicted, enabling an attacker to steal accounts. Here's the rand-string function from arc.arc, version 2. It gets called with n=8 to generate login cookies, and n=10 for the \"fnids\" that get used all over the site as hash keys identifying closures. (def rand-string (n) (with (cap (fn () (+ 65 (rand 26))) sm (fn () (+ 97 (rand 26))) dig (fn () (+ 48 (rand 10)))) (coerce (map [coerce _ 'char] (cons (rand-choice (cap) (sm)) (n-of (- n 1) (rand-choice (cap) (sm) (dig))))) 'string))) The first thing you might notice about this function is that not all characters are equally probable. Each digit has a 1/30 chance of occuring, while each letter has a 1/78 chance. Thi",
+    "source": "hackernews",
+    "keyword": "security"
+  },
+  {
+    "input": "Vercel April 2026 security incident",
+    "output": "https:&#x2F;&#x2F;vercel.com&#x2F;kb&#x2F;bulletin&#x2F;vercel-april-2026-security-in...",
+    "source": "hackernews",
+    "keyword": "security"
+  },
+  {
+    "input": "Shai-Hulud malware attack: Tinycolor and over 40 NPM packages compromised",
+    "output": "A lot of blogs on this are AI generated and such as this is developing, so just linking to a bunch of resources out there: Socket: - Sep 15 (First post on breach): https:&#x2F;&#x2F;socket.dev&#x2F;blog&#x2F;tinycolor-supply-chain-attack-affect... - Sep 16: https:&#x2F;&#x2F;socket.dev&#x2F;blog&#x2F;ongoing-supply-chain-attack-targets-... StepSecurity – https:&#x2F;&#x2F;www.stepsecurity.io&#x2F;blog&#x2F;ctrl-tinycolor-and-40-npm-p... Aikido - https:&#x2F;&#x2F;www.aikido.dev&#x2F;blog&#x2F;s1ngularity-nx-attackers-strike-... Ox - https:&#x2F;&#x2F;www.ox.security&#x2F;blog&#x2F;npm-2-0-hack-40-npm-packages-hi... Safety - https:&#x2F;&#x2F;www.getsafety.com&#x2F;blog-posts&#x2F;shai-hulud-npm-attack Phoenix - https:&#x2F;&#x2F;phoenix.security&#x2F;npm-tinycolor-compromise&#x2F; Semgrep - https:&#x2F;&#x2F;semgrep.dev&#x2F;blog&#x2F;2025&#x2F;security-advisory-npm-packages...",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "FBI Admits It Controlled Tor Servers Behind Mass Malware Attack",
+    "output": "&quot;It wasn’t ever seriously in doubt, but the FBI yesterday acknowledged that it secretly took control of Freedom Hosting last July, days before the servers of the largest provider of ultra-anonymous hosting were found to be serving custom malware designed to identify visitors.&quot; ...",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "Nx compromised: malware uses Claude code CLI to explore the filesystem",
+    "output": "https:&#x2F;&#x2F;github.com&#x2F;nrwl&#x2F;nx&#x2F;security&#x2F;advisories&#x2F;GHSA-cxm3-wv7... https:&#x2F;&#x2F;www.stepsecurity.io&#x2F;blog&#x2F;supply-chain-security-alert...",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "Shai-Hulud Themed Malware Found in the PyTorch Lightning AI Training Library",
+    "output": "Also: https:&#x2F;&#x2F;socket.dev&#x2F;blog&#x2F;lightning-pypi-package-compromised",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "Malware developers added nuclear and biological weapons text to to their spyware",
+    "output": "https:&#x2F;&#x2F;socket.dev&#x2F;blog&#x2F;mini-shai-hulud-miasma-and-hades-wor...",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "My minute-by-minute response to the LiteLLM malware attack",
+    "output": "Related: Tell HN: Litellm 1.82.7 and 1.82.8 on PyPI are compromised - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47501426 (483 comments)",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "German Chaos Computer Club analyzes and releases government malware",
+    "output": "From the press release: \"The largest European hacker club, \"Chaos Computer Club\" (CCC), has reverse engineered and analyzed a \"lawful interception\" malware program used by German police forces. It has been found in the wild and submitted to the CCC anonymously. The malware can not only siphon away intimate data but also offers a remote control or backdoor functionality for uploading and executing arbitrary other programs. Significant design and implementation flaws make all of the functionality available to anyone on the internet.\"",
+    "source": "hackernews",
+    "keyword": "malware"
+  },
+  {
+    "input": "CrowdStrike Update: Windows Bluescreen and Boot Loops",
+    "output": "My workplace has a number of people reporting Windows blue-screening and going into a boot loop. The IT Department have a number of servers recently gone offline and have said there&#x27;s a chance that the two issues are related, and potentially due to a Crowd Strike application update. My laptop blue-screened and rebooted, but is working fine after the reboot. A local radio station has also said they&#x27;ve got the same issues with their laptops and their phone system is down as a result. Not seeing anything on news sites yet. Anyone else seeing similar? Above is all based in Australia.",
+    "source": "hackernews",
+    "keyword": "windows"
+  },
+  {
+    "input": "Show HN: I recreated Windows XP as my portfolio",
+    "output": "Years ago I stumbled across a basic version of this concept and it stuck with me. I knew if I was ever going to take on such a project, it would need to be flawless, but without coding experience it was just another idea that would never happen. By the end of 2024, as AI coding tools exploded everywhere, I finally had a way to make it real. I started from zero knowledge and spent months collaborating with AI agents as a learning experience. Every pixel and every function went through me. The AI translated what I asked for into code, but every decision was human. I didn&#x27;t use existing OS frameworks because the goal was learning how basic coding languages worked while also developing my skills with AI collaboration. Apart from basic libraries like xp.css and paint.js, it&#x27;s all original code. The result is a fully functional Windows XP recreation running in your browser. Complete experience with sounds, animations, and working applications. Even works properly on mobile, which required rebuilding everything to maintain the authentic feel without becoming unusable on touchscreens. This project taught me more about coding and AI collaboration than I ever expected. Would love t",
+    "source": "hackernews",
+    "keyword": "windows"
+  },
+  {
+    "input": "Show HN: I built a hardware processor that runs Python",
+    "output": "Hi everyone, I built PyXL — a hardware processor that executes a custom assembly generated from Python programs, without using a traditional interpreter or virtual machine. It compiles Python -&gt; CPython Bytecode -&gt; Instruction set designed for direct hardware execution. I’m sharing an early benchmark: a GPIO test where PyXL achieves a 480ns round-trip toggle — compared to 14-25 micro seconds on a MicroPython Pyboard - even though PyXL runs at a lower clock (100MHz vs. 168MHz). The design is stack-based, fully pipelined, and preserves Python&#x27;s dynamic typing without static type restrictions. I independently developed the full stack — toolchain (compiler, linker, codegen), and hardware — to validate the core idea. Full technical details will be presented at PyCon 2025. Demo and explanation here: https:&#x2F;&#x2F;runpyxl.com&#x2F;gpio Happy to answer any questions",
+    "source": "hackernews",
+    "keyword": "python"
+  },
+  {
+    "input": "Tell HN: Notion Desktop is monitoring your audio and network",
+    "output": "If you have the Notion Desktop App installed, you may have started to notice a &quot;In a meeting? Start AI Meeting Notes&quot; notification pop up exactly when you are joining a virtual meeting (e.g. joining a Google Meet on Firefox). At first, I assumed it must have been using my Google Workspace account to snoop on my calendar. But then I started to notice it would notify exactly when I joined even if I was late and the meeting had previously started. This was the response from Notion Support after they worked with the Notion Engineering team. &gt; Meeting Detection Architecture: &gt; - The system uses a sophisticated dual-detection approach: microphone monitoring combined with network port analysis &gt; - Detection is implemented separately for macOS and Windows at the native operating system level I&#x27;ve uninstalled the Notion Desktop App...",
+    "source": "hackernews",
+    "keyword": "monitoring"
+  },
+  {
+    "input": "Launch HN: Highlight.io (YC W23) – Open-source, full stack web app monitoring",
+    "output": "Hi Hacker News! We’re Jay and Vadim from Highlight.io ( https:&#x2F;&#x2F;highlight.io ). We’re building a truly open source [1] observability platform for modern web applications. We posted some of our tools to HN in recent months [2][3]. Today, we’re excited to formally launch the project, share more about where we’re going, and of course, poll the community for some feedback. A bit of background: Vadim and I have worked at quite a few startups at this point, and a recurring challenge we’ve faced was tracing usability issues on the frontend to downstream errors and logs on the server. Understanding the real reason behind customer issues was always a chaotic juggling of multiple tools. With the rise of &quot;frontend-forward&quot; frameworks such as NextJS, which blur the boundary between the client and server, the complexity of tracing these issues is only growing. This is where Highlight.io comes in: our product bridges the gap between client and server to give you a holistic view of your entire application. At its core, Highlight.io has three main “products”: Session Replay, Error Monitoring, and Logging. The novelty here is not in each product but in how they are connected. Fo",
+    "source": "hackernews",
+    "keyword": "monitoring"
+  },
+  {
+    "input": "Linux server monitoring tools",
+    "output": "Four tools to get an overview and interact with what is going on with your Linux machine.",
+    "source": "hackernews",
+    "keyword": "monitoring"
+  },
+  {
+    "input": "Show HN: We open-sourced our compost monitoring tech",
+    "output": "I&#x27;m from a compost tech startup (Monty Compost Co.) focused on making composting more efficient for households and industrial facilities. But our tech isn’t just for composting— it’s a versatile system that can be repurposed for a wide range of applications. So, we’ve made it open source for anyone to experiment with! One of the exciting things about our open-source compost monitoring tech is its flexibility. You can connect it to platforms like Raspberry Pi, Arduino, or other single-board computers to expand its capabilities or integrate it into your own projects. Our system includes sensors for: * Gas composition * Temperature * Moisture levels * Air pressure All data can be exported as CSV files for analysis. While it’s originally built for monitoring compost, the hardware and data capabilities are versatile and could be repurposed for other applications (IoT, environmental monitoring, etc.) Hacker’s Guide to Monty Tech: https:&#x2F;&#x2F;github.com&#x2F;gtls64&#x2F;MontyHome-Hackers-Guide If you’re into data, sensors, or creative tech hacks, we’d love for you to check it out and let us know what you build!",
+    "source": "hackernews",
+    "keyword": "monitoring"
+  },
+  {
+    "input": "Show HN: HardView – Cross-platform Python module for detailed hardware info",
+    "output": "Hi HN, I built a Python module called HardView to retrieve low-level hardware and system info across platforms. I needed something fast, structured, and consistent across Windows and Linux — something that could handle BIOS data, CPU, memory, disks, network, SMART attributes, and real-time monitoring. Most existing tools (like psutil or pySMART) either didn’t go deep enough, weren’t cross-platform, or didn’t expose everything in JSON format — so I wrote my own in C, then exposed it as a Python module. Key features: BIOS&#x2F;system&#x2F;CPU&#x2F;RAM&#x2F;disk&#x2F;network info SMART and partition info (disks) Real-time CPU&#x2F;RAM&#x2F;system usage monitoring JSON output and Python API It’s open-source and still evolving. Would love feedback, ideas, or contributions! GitHub: https:&#x2F;&#x2F;github.com&#x2F;gafoo173&#x2F;hardview",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Show HN: Varnishtuner.py",
+    "output": "One thing I&#x27;d suggest right off the bat is psutil. It looks like y&#x27;all did a lot of manual work to gather basic system information that you&#x27;d get out of the box with psutil. Plus, they&#x27;ve abstracted a lot of the cross-platform inconsistencies.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "SuPPort: Evented Python servers",
+    "output": "OK kind of TLDR; I just took the packages that they use from the link they had provided. boltons==0.4.1 cffi==0.8.6 clastic==0.4.2 cryptography==0.7.2 enum34==1.0.4 faststat==0.3.1 gevent==1.0.1 greenlet==0.4.5 hyperloglog==0.0.9 lithoxyl&gt;=0.1.0 psutil==2.2.1 py==1.4.26 pyasn1==0.1.7 pycparser==2.10 pyjks&gt;=0.3.0.1 pyOpenSSL==0.14 pytest==2.6.4 sampro==0.1 ufork&gt;=0.0.1 six==1.9.0 Werkzeug==0.9.4",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "24 Pull Requests",
+    "output": "Here are 179 basic Linux utilities... rpm -ql binutils coreutils moreutils moreutils-parallel \\ findutils diffutils sharutils psutils \\ pciutils iputils elfutils | grep -E &#x2F;usr&#x2F;s?bin ...some of which likely have parsing bugs which can be automatically identified with this fuzzer discussed on HN recently: http:&#x2F;&#x2F;lcamtuf.coredump.cx&#x2F;afl&#x2F; Also, an exciting opportunity to discover what the &#x27;pee&#x27; and &#x27;sponge&#x27; commands do.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "PgOSQuery: Expose the operating system as a Postgres database",
+    "output": "Yeah, heres a link to the awesome psutil library it uses: https:&#x2F;&#x2F;github.com&#x2F;giampaolo&#x2F;psutil It could be made a bit more efficient by filtering the processes[1], but the code would not look nearly as lovely. 1. http:&#x2F;&#x2F;multicorn.org&#x2F;implementing-an-fdw&#x2F;#idoptimizations",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "PgOSQuery: Expose the operating system as a Postgres database",
+    "output": "Not necessarily. You could put a Python (with psutil module) server on machines and connect from a single Postgres&#x2F;FDW server.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "A guide to analyzing Python performance",
+    "output": "memory_profiler [0] mentioned in the post actual can detect memory leaks in compiled C extensions as it uses the OS through the psutil module to measure the aggregate memory usage of the Python process rather than asking the Python runtime itself. It can therefore take into account memory that was not allocated by the Python malloc. [0] https:&#x2F;&#x2F;github.com&#x2F;fabianp&#x2F;memory_profiler",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Django System Monitor",
+    "output": "Just incase anyone is wondering, psutil is the real magic behind these kind of projects. Those guys did a heroic job on making that app.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "2013 Resolutions: a man page a day makes the newb go away",
+    "output": "Unfortunately there are a couple of commands that don't have a man page, e.g. mpplu (from argyllcms-1.4.0-2.fc17.x86_64) or showchar (from psutils-1.17-38.fc17.x86_64).",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Unix Text Processing (1987)",
+    "output": "You can generate PDF (without the hyperlinks) with standard psutils (e.g.: ps2pdf). A good PDF reader will offer text search, which is a bit of a help. Otherwise, I'd have to investigate groff and text conversion utilities to see if the metadata are readily accessible. Interesting question, though I suspect it might take a slight rewrite.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Turning a pile of documents into a searchable useable knowledge base",
+    "output": "Living in bizarro world of AI. Install open source project, fails, feed into OpenCode w&#x2F;DeepSeekFlash 4 -&gt; feed error into it get fixed. The kill_port function only catches ImportError from the psutil block, so when psutil is installed but raises AccessDenied (common on macOS), it crashes instead of falling back to lsof. In platform_paths.py - add two lines after line 250: except psutil.Error: pass Fixed. Now when psutil raises AccessDenied (as happens on macOS without elevated privileges), it falls through to the lsof&#x2F;fuser fallback instead of crashing. Try docubrowser start again.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Turning a pile of documents into a searchable useable knowledge base",
+    "output": "Anyone getting a bunch of permission errors when running (e.g. Traceback (most recent call last): File &quot;&#x2F;Users&#x2F;tron&#x2F;Applications&#x2F;DocuBrowse&#x2F;venv&#x2F;lib&#x2F;python3.9&#x2F;site-packages&#x2F;psutil&#x2F;_psosx.py&quot;, line 347, in wrapper return fun(self, args, *kwargs) File &quot;&#x2F;Users&#x2F;tron&#x2F;Applications&#x2F;DocuBrowse&#x2F;venv&#x2F;lib&#x2F;python3.9&#x2F;site-packages&#x2F;psutil&#x2F;_psosx.py&quot;, line 508, in net_connections rawlist = cext.proc_net_connections(self.pid, families, types) PermissionError: [Errno 1] Operation not permitted (originated from proc_pidinfo(PROC_PIDLISTFDS) 1&#x2F;2)",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "LLM FFN benchmarks on a 4‑core HP All‑in‑One",
+    "output": "Methodology and reproducibility details: All benchmarks were run on the same machine: HP All‑in‑One, Intel i7‑1165G7 (4 cores), 64 GB RAM. All tests use identical inputs, identical weights, identical precision, and identical batch size. Dense baseline uses the system BLAS (MKL&#x2F;oneDNN depending on environment). Vendor sparse baseline uses standard CSR&#x2F;COO kernels. The custom sparse operator runs in the same Python environment and on the same CPU. All baselines (dense and vendor sparse) run normally on this hardware; the custom operator only changes runtime performance, not model executability. Wall‑clock time is measured with time.perf_counter() around the matmul call. Power readings come from psutil.sensors_battery() and psutil.cpu_freq(); these are not calibrated against external instrumentation. “Effective TFLOPS” = nominal dense FLOPs ÷ wall‑clock time. Values above hardware peak indicate fewer multiply‑accumulate operations executed than dense. Dense TFLOPS is the actual hardware utilization number. “Tokens&#x2F;s” is computed as 1 ÷ (per‑iteration wall‑clock time). TTFT is measured as the time from operator invocation to first output. All outputs are SHA‑256‑verified",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "LLM FFN benchmarks on a 4‑core HP All‑in‑One",
+    "output": "I ran four feed‑forward network (FFN) layers from real LLMs on a consumer HP All‑in‑One PC (Intel i7‑1165G7, 4 cores, 64 GB RAM). Each test compares: vendor dense baseline vendor sparse baseline a custom sparse operator identical inputs identical weights identical precision SHA‑256‑verified outputs wall‑clock timing psutil‑based power measurement All baselines (dense and vendor sparse) run normally on this machine. The custom operator only changes runtime performance; it is not required to execute the models. Below are the raw results and full JSON for reproducibility. Mistral‑7B Wanda FFN (4096×14336 @ 55% sparsity) Speedup vs dense: 84.3× Speedup vs vendor sparse: 163.4× Energy reduction: 98.8% Tokens&#x2F;s: 53,330 Dense TFLOPS: 0.07 Effective TFLOPS: 6.26 TTFT: 0.000590 s python { &quot;benchmark&quot;: &quot;Mistral-7B Wanda 55% Sparse FFN&quot;, &quot;sparsity_pct&quot;: 55.0, &quot;matrix&quot;: &quot;4096x14336&quot;, &quot;speedup_vs_dense_x&quot;: 84.3, &quot;speedup_vs_sparse_x&quot;: 163.4, &quot;energy_savings_pct&quot;: 98.8, &quot;tokens_per_s_rolv&quot;: 53330.0, &quot;tokens_per_s_dense&quot;: 633.0, &quot;tokens_per_s_sparse&quot;: 326.0, &quot;nominal_gflops_per_",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "From Python 3.3 to today: ending 15 years of subprocess polling",
+    "output": "For ~15 years, Python&#x27;s subprocess.Popen.wait() implemented timeouts using busy-loop polling. This post explains how that was finally replaced with true event-driven waiting on POSIX systems: pidfd_open() + poll() on Linux and kqueue() on BSD &#x2F; macOS. The result is zero polling and fewer context switches. The same improvement now landing both in psutil and CPython itself.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Detect memory leaks of C extensions with psutil and psleak",
+    "output": "Hey, thank you so much for all your hard work on psutil, it is my goto import! And this looks like a really interesting development you have created to add to the available tools for detecting those tricky memory leaks. I have done some work in this space as well such as how to write a Python C extension without leaks in the first place [0]. This also contains a section on memory leaks, using tools like your psutil [1] This also shows where the Python documentation for C extensions contains errors, omissions or is misleading. These errors can trap the unwary. Also I developed a Python memory tracer, pymemtrace, that uses a variety of techniques (including using your psutil!) to track memory usage at different costs and levels of granularity [2]. Now psutil 7.2.0 is out I&#x27;ll update both those projects. Thanks again for all your hard work. [0] Project: https:&#x2F;&#x2F;github.com&#x2F;paulross&#x2F;PythonExtensionPatterns Docs: https:&#x2F;&#x2F;pythonextensionpatterns.readthedocs.io&#x2F;en&#x2F;latest&#x2F;ind... [1] https:&#x2F;&#x2F;pythonextensionpatterns.readthedocs.io&#x2F;en&#x2F;latest&#x2F;mem... [2] Project: https:&#x2F;&#x2F;github.com&#x2F;paulross&#x2F;pymemtrace ",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Detect memory leaks of C extensions with psutil and psleak",
+    "output": "I have released new psutil 7.2.0, which includes 2 new APIs to inspect C heap memory allocations. I have also released a new tool called psleak, which detects memory leaks in C extension modules. https:&#x2F;&#x2F;gmpy.dev&#x2F;blog&#x2F;2025&#x2F;psutil-heap-introspection-apis https:&#x2F;&#x2F;github.com&#x2F;giampaolo&#x2F;psleak&#x2F;",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "[dead]",
+    "output": "*`system` – Tiny OS Utils for Isolated Cmds &amp; Info* ```python import shlex, os, uuid, psutil, requests from ipaddress import ip_address from typing import Optional ``` *Globals* - `id = uuid.uuid4()` → session UUID - `uid = str(id)` → temp dir `.&#x2F;{uid}&#x2F;` - `parts = psutil.disk_partitions()` - `usage = psutil.disk_usage(&quot;.&#x2F;&quot;)` --- ### `run(cmd: str = &quot;True&quot;)` Executes `cmd` in isolated `.&#x2F;{uid}&#x2F;cache.sh`, auto-cleans. Uses `shlex.quote()` → injection-safe. ```python run(&quot;ls -la&quot;) ``` --- ### `getoutput(label: str = &quot;True&quot;) -&gt; str` Runs `label`, captures *stdout+stderr* → `output.txt`, returns stripped string. ```python getoutput(&quot;uname -a&quot;) # &quot;Linux …&quot; ``` --- ### `py(cmd: str)` Writes `cmd` to `cache.py`, runs via `python`. Prefer native Python. ```python py(&quot;print(42)&quot;) ``` --- ### `install(manager: str, pkg: str)` `sudo {manager} install {pkg}` – *needs passwordless sudo*. ```python install(&quot;apt&quot;, &quot;vim&quot;) ``` --- ### `ip() -&gt; ipaddress.ip_address` Public IP via ` https:&#x2F;&#x2F;ifconfig.me `. ```python ip() # IPv4Address(&#x27;203.0.113.42&#x27;) ``` --- ",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Wheels for free-threaded Python now available for psutil",
+    "output": "Wow, long time no see. psutil is a great project and I do have some future plans involving it.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "[dead]",
+    "output": "For the past few weeks, I&#x27;ve been building a tool to solve a problem that always frustrated me: the constant context-switching between BI tools for visualization, separate scripts for data cleaning, and Jupyter notebooks for machine learning. My goal was to create a single, web-based platform that could handle the entire data science workflow from end to end. https:&#x2F;&#x2F;evepre.streamlit.app&#x2F; It’s built entirely in Python with Streamlit as the frontend. It’s fully self-contained and operates on user-uploaded files. Some of the core features include: - Conversational AI:: Uses natural language commands to perform actions. - Automated Data Cleaning* Analyzes data and suggests one-click cleaning operations. - AutoML Studio: Automatically trains and compares multiple models (RandomForest, MLP) to find the best performer for regression or classification tasks. - Dynamic Dashboards: Lets users build and customize a variety of interactive Plotly charts. - Production-Ready Features: Includes real-time performance monitoring (CPU&#x2F;memory), robust error handling, and a comprehensive logging system. Tech Stack: Python, Streamlit, Pandas, Scikit-learn, Plotly, Psutil. The p",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Glances - an easy CLI overview of your system (CPU, mem, I/O)",
+    "output": "I will definitely try this out! Just from browsing the webpage it looks nice. The psutil library doesn't use process accounting, does it? Without it, Glances will miss processes whose lifetime is within a single check interval. As always when this topic comes up, I have to give a recommendation for atop. This LWN article goes into why it is awesome- https://lwn.net/Articles/387202/ . The logging and interactive examination of historical process-level metrics is the killer feature for me. Here are some screenshots- http://atoptool.nl/screenshots.php",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Monitoring Windows Usage in Python: A Step-by-Step Guide",
+    "output": "Discover how to monitor and log Windows usage with Python in this step-by-step guide. From fetching the active window title and process details to continuously tracking and logging changes in real-time, this article walks you through building a simple yet powerful monitoring tool using Python&#x27;s pywin32 and psutil libraries. Perfect for anyone interested in productivity tracking, system monitoring, or just exploring Python’s interaction with the Windows OS.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Amazon's exabyte-scale migration from Apache Spark to Ray on EC2",
+    "output": "Multi-threaded libraries (e.g., numpy and PyTorch on CPUs come to mind) are well supported. In scenarios where many processes are each running heavily multi-threaded computations, it can help to pin specific processes to specific cores (e.g., using tools like psutil) to avoid contention. The scenario where a Ray task forks is probably not very well supported. You can certainly start a subprocess from within a Ray task, but I think forking could easily cause issues. You can definitely use Ray + Jax, but you probably need to avoid forking a process within a Ray worker.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Shape typing in Python",
+    "output": "My experience has been different: last year I started writing Python again after a long break, and I am yet to regret using types pervasively. If some library has no type definitions, I prefer to have my typed code interact with its untyped code. It is still better than having no types at all. You can sometimes get some useful type safety by annotating your functions with the untyped library&#x27;s classes. Since then, I have used established libraries like Beautiful Soup, Jinja, Pillow, platformdirs, psutil, python-dateutil, redis-py, and xmltodict with either official or third-party types. I remember their types being useful to varying degrees and not a problem. I have replaced Requests with the very similar but typed and optionally async HTTPX. My most objectionable experience with types in Python so far has been having to write root = cast( lxml.etree._Element, # noqa: SLF001 html5.parse(html, return_root=True), ) when I used types-lxml with https:&#x2F;&#x2F;github.com&#x2F;kovidgoyal&#x2F;html5-parser . In return I have been able to catch some bugs early and to &quot;fearlessly&quot;refactor code with few or no unit tests, only integration tests. The style I have arrived at i",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Sudo for Windows",
+    "output": "Scoop provides https:&#x2F;&#x2F;github.com&#x2F;lukesampson&#x2F;psutils , which works really well, I am sure there are a million things people will tell me I am missing.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Sudo for Windows",
+    "output": "I already use https:&#x2F;&#x2F;github.com&#x2F;lukesampson&#x2F;psutils which has a sudo.ps1, which I install via scoop (I know that&#x27;s a mouthful, but I just install scoop and run `scoop install sudo`). I used it from powershell literally just before I opened this article (after copy-pasting a password, I copy some random text laying around in the browser, like &quot;com&quot;, then run `sudo restart-service -name &#x27;cbdhsvc*&#x27;` to clear the clipboard history -- does not clear the current value). There is a UAC prompt, but it&#x27;s perfectly adequate for interactive work.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Line-by-line memory usage of a Python program",
+    "output": "Not on my machine. :-) C:\\&#62;ps 'ps' is not recognized as an internal or external command, operable program or batch file. The guy why suggested using the psutil is onto something -- definitely a 3rd-party dependency, but rolls all the platform specific messiness into a library. And much faster and less fragile than forking a new process.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Switching to Fedora Silverblue",
+    "output": "It&#x27;s picosnitch, if you know what I&#x27;m doing wrong&#x2F;how to fix it that&#x27;d be great! It depends on bcc and psutil, and I am able to build and run it from a .nix file using python3.pkgs.fetchPypi with nix-build -E &#x27;with import &lt;nixpkgs&gt; {}; callPackage .&#x2F;picosnitch.nix {}&#x27; sudo -E .&#x2F;result&#x2F;bin&#x2F;picosnitch start-no-daemon However, when I run it with just start, it can no longer find psutil and bcc. It uses a daemon class here [1]. I also encounter the same issue when running it without sudo, since it will re-execute itself here [2]. It can also use systemd, but I didn&#x27;t get around to figuring out how to use systemd and install the service file on nix (I&#x27;ve never used nix before and know very little). [1] https:&#x2F;&#x2F;github.com&#x2F;elesiuta&#x2F;picosnitch&#x2F;blob&#x2F;master&#x2F;picosnitc... [2] https:&#x2F;&#x2F;github.com&#x2F;elesiuta&#x2F;picosnitch&#x2F;blob&#x2F;master&#x2F;picosnitc...",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Show HN: I stripped DALL·E Mini to its bare essentials and converted it to Torch",
+    "output": "Can anyone give instructions for M1 Max MBP? I had a compilation issue in building the wheel for psutil that looks like &quot;gcc-11: error: this compiler does not support &#x27;root:xnu-8020.121.3~4&#x2F;RELEASE_ARM64_T6000&#x27;&quot; (gcc doesn&#x27;t support ARM yet?) What toolchain will get it working on Mac?",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Show HN: tiptop",
+    "output": "tiptop stands on the shoulders of giants here. Textual (for displaying) and psutil (for fetching the data) do a great job, and tiptop&#x27;s job is more or less down to intercepting some exceptions that occur only on Windows or so.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Requests: HTTP for Humans",
+    "output": "Check out psutil ( http://code.google.com/p/psutil/ ). I discovered it the other day when I needed to get a list of open ports used by an ssh client running in a subprocess, and it was as easy as this: sshc = psutil.Process(pid) sshc.get_connections() It allows you to upconvert process ids, and it has its own wrapper of Popen that returns Process objects. It also seems to have well thought out windows compatibility, if that matters to you. :D &#60;- My face when I found it.",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Windows Subsystem for Linux: The lost potential",
+    "output": "&gt; Can you imagine how cool it would be if you could type ps or top within a WSL session and see Linux and Windows processes side-by-side, able to mutate their state with kill No, that could not reasonably have been. The underlying NT kernel seeing all processes, whether Win32 or WSL, is one thing, but the psutils in the Linux world being able to see non-Linux processes doesn&#x27;t make any amount of sense. kill works by sending signals. This makes no sense to processes that are not in the Linux domain. Edit: also what ralph87 writes in paragraph 4: https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=25154556",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Show HN: Brök – Find broken links in text documents",
+    "output": "I started installing haskell a lil while ago with macports but I got as far as bash$ port rdeps ghc The following ports are dependencies of ghc @8.8.3_0: gnupg2 pkgconfig libiconv gperf gettext ncurses zlib xz bzip2 libassuan libgpg-error pth libksba libgcrypt readline gnutls autoconf automake libtool xattr unzip gtk-doc glib2 libxml2 icu libffi pcre libedit libxslt perl5.28 db48 gdbm docbook-xml xmlcatmgr docbook-xml-4.1.2 docbook-xml-4.2 docbook-xml-4.3 docbook-xml-4.4 docbook-xml-4.5 docbook-xml-5.0 docbook-xsl-nons itstool gawk py27-libxml2 python27 expat openssl sqlite3 python_select python2_select python38 python3_select py38-anytree py38-setuptools py38-six py38-pytest py38-setuptools_scm py38-py py38-packaging py38-attrs py38-hypothesis py38-sortedcontainers py38-zopeinterface py38-parsing py38-more-itertools py38-pluggy py38-wcwidth pytest_select py38-nose nosetests_select py38-lxml py38-pygments pygments_select py38-mock clang-9.0 cmake libcxx curl libidn2 libunistring perl5 texinfo help2man p5.28-locale-gettext libpsl curl-ca-bundle libarchive lzo2 lz4 zstd libuv libomp llvm-9.0 xar llvm_select clang_select ld64 ld64-latest libmacho-headers libtapi gmp libtasn1 p11-kit n",
+    "source": "hackernews",
+    "keyword": "psutil"
+  },
+  {
+    "input": "Show HN: Printercow – Turn any thermal printer into an API endpoint",
+    "output": "I&#x27;ve always been fascinated by thermal printers – there&#x27;s something magical about seeing text and images materialize on paper in seconds. But I found that working with them programmatically was always a pain. You either had to deal with ancient printer protocols or use clunky vendor-specific SDKs. So I built Printercow ( https:&#x2F;&#x2F;printercow.com ) – it turns any thermal printer into an HTTP endpoint with just one command. Technical details: - Supports any ESC&#x2F;POS compatible printer (Epson, Star Micronics, etc.) - Handles paper widths from 58mm to 120mm - Automatic image dithering and scaling - Built-in failover protection for high-volume scenarios Don&#x27;t have a printer yet but want to try it out? I&#x27;ve got you covered! When you sign-up you get 300 free prints and you can watch your creations come to life on my printer via Twitch live stream ( https:&#x2F;&#x2F;twitch.tv&#x2F;printercow ). Perfect for testing your integration before committing to hardware. I&#x27;m particularly excited about the AI integration possibilities. Instead of yet another chat interface, you can have AI generate content that exists in the physical world – artwork, poems, todo ",
+    "source": "hackernews",
+    "keyword": "endpoint"
+  },
+  {
+    "input": "Ask HN: Where do you host your API endpoint?",
+    "output": "Just for some news feed like contents - it might be troublesome to launch an instance of the single purpose. Looking into Google spreadsheet as API endpoint. What is your choice?",
+    "source": "hackernews",
+    "keyword": "endpoint"
+  },
+  {
+    "input": "Google details new 24-hour process to sideload unverified Android apps",
+    "output": "https:&#x2F;&#x2F;android-developers.googleblog.com&#x2F;2026&#x2F;03&#x2F;android-de...",
+    "source": "hackernews",
+    "keyword": "process"
+  },
+  {
+    "input": "Ask HN: Why does Zoom Desktop examine all processes and arguments?",
+    "output": "Looking at syscalls, I see Zoom desktop reads all processes and arguments. [pid 3844872] stat(&quot;&#x2F;proc&#x2F;1&quot;, {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;1&#x2F;stat&quot;, O_RDONLY) = 4 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;1&#x2F;cmdline&quot;, O_RDONLY) = 4 [pid 3844872] readlink(&quot;&#x2F;proc&#x2F;1&#x2F;exe&quot;, 0x20c0520, 1024) = -1 EACCES (Permission denied) [pid 3844872] stat(&quot;&#x2F;proc&#x2F;2&quot;, {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;2&#x2F;stat&quot;, O_RDONLY) = 4 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;2&#x2F;cmdline&quot;, O_RDONLY) = 4 [pid 3844872] stat(&quot;&#x2F;proc&#x2F;3&quot;, {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;3&#x2F;stat&quot;, O_RDONLY) = 4 [pid 3844872] openat(AT_FDCWD, &quot;&#x2F;proc&#x2F;3&#x2F;cmdline&quot;, O_RDONLY) = 4 ... Why would it do that? Is there any way to prevent it?",
+    "source": "hackernews",
+    "keyword": "process"
+  },
+  {
+    "input": "Show HN: Witr – Explain why a process is running on your Linux system",
+    "output": "Hi HN, I built a small Linux CLI tool called witr (Why Is This Running?). The idea came from a situation most of us have hit: you log into a machine, see a process or port running, and immediately wonder why it exists, who started it, and what is keeping it alive right now. witr traces a process, service, or port back to its origin and responsibility chain and explains it in a way that’s quick to read, especially when you’re debugging under pressure. This is v0.1.0. It’s intentionally small and focused. Feedback, criticism, and edge cases are very welcome. Repo: https:&#x2F;&#x2F;github.com&#x2F;pranshuparmar&#x2F;witr",
+    "source": "hackernews",
+    "keyword": "process"
+  },
+  {
+    "input": "Performance and telemetry analysis of Trae IDE, ByteDance's VSCode fork",
+    "output": "Hi HN, I was evaluating IDEs for a personal project and decided to test Trae, ByteDance&#x27;s fork of VSCode. I immediately noticed some significant performance and privacy issues that I felt were worth sharing. I&#x27;ve written up a full analysis with screenshots, network logs, and data payloads in the linked post. Here are the key findings: 1. Extreme Resource Consumption: Out of the box, Trae used 6.3x more RAM (~5.7 GB) and spawned 3.7x more processes (33 total) than a standard VSCode setup with the same project open. The team has since made improvements, but it&#x27;s still significantly heavier. 2. Telemetry Opt-Out Doesn&#x27;t Work (It Makes It Worse): I found Trae was constantly sending data to ByteDance servers (byteoversea.com). I went into the settings and disabled all telemetry. To my surprise, this didn&#x27;t stop the traffic. In fact, it increased the frequency of batch data collection. The telemetry &quot;off&quot; switch appears to be purely cosmetic. 3. What&#x27;s Being Sent: Even with telemetry &quot;disabled,&quot; Trae sends detailed payloads including: Hardware specs (CPU, memory, etc.) Persistent user, device, and machine IDs OS version, app language, use",
+    "source": "hackernews",
+    "keyword": "performance"
+  },
+  {
+    "input": "Show HN: Memories – FOSS Google Photos alternative built for high performance",
+    "output": "Memories is a FOSS Google Photos alternative that you can self-host (it runs as a Nextcloud plugin). Website: https:&#x2F;&#x2F;memories.gallery&#x2F; GitHub: https:&#x2F;&#x2F;github.com&#x2F;pulsejet&#x2F;memories Demo Server: https:&#x2F;&#x2F;demo.memories.gallery&#x2F;apps&#x2F;memories&#x2F; (demo runs in San Francisco on a free-tier cloud vm) Memories has been built ground-up for high performance and is extremely fast when configured correctly. In our testing environment, it can load a timeline view with 100k photos in under 500ms, including query and rendering time! Some features to highlight: * A timeline similar to Google Photos where you can skip to any time in history instantly. * AI-based tagging that runs locally on your server, identifying and tagging people and objects. * Albums and external sharing. * Metadata editing support * A world map of your photos, supported both on mobile and the web * Did I mention it&#x27;s extremely fast? Would love to hear feedback from the HN community! :)",
+    "source": "hackernews",
+    "keyword": "performance"
+  },
+  {
+    "input": "An AI agent published a hit piece on me",
+    "output": "Previously: AI agent opens a PR write a blogpost to shames the maintainer who closes it - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=46987559 - Feb 2026 (582 comments)",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "I believe there are entire companies right now under AI psychosis",
+    "output": "https:&#x2F;&#x2F;xcancel.com&#x2F;mitchellh&#x2F;status&#x2F;2055380239711457578 https:&#x2F;&#x2F;hachyderm.io&#x2F;@mitchellh&#x2F;116580433508108130",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "IDF killed Gaza aid workers at point blank range in 2025 massacre: Report",
+    "output": "Report [pdf]: https:&#x2F;&#x2F;content.forensic-architecture.org&#x2F;wp-content&#x2F;uploads...",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "Project Glasswing: Securing critical software for the AI era",
+    "output": "Related: Assessing Claude Mythos Preview&#x27;s cybersecurity capabilities - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47679155 System Card: Claude Mythos Preview [pdf] - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47679258 Also: Anthropic&#x27;s Project Glasswing sounds necessary to me - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47681241",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "Show HN: I'm an airline pilot – I built interactive graphs/globes of my flights",
+    "output": "Hey HN! Pilots everywhere are required to keep a logbook of all their flying hours, aircraft, airports, and so on. Since I track everything digitally (some people still just use paper logbooks!), I put together some data visualizations and a few 3D globes to show my flying history. This globe is probably my favourite so far: https:&#x2F;&#x2F;jameshard.ing&#x2F;pilot&#x2F;globes&#x2F;all If you’ve got ideas for other graphs or ways to show this kind of data, I’d love to hear them!",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "AI World Clocks",
+    "output": "&quot;Every minute, a new clock is rendered by nine different AI models.&quot;",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "YouTube to automatically label AI-generated videos",
+    "output": "https:&#x2F;&#x2F;variety.com&#x2F;2026&#x2F;digital&#x2F;news&#x2F;youtube-ai-video-label...",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "Launch HN: Prometheus (YC W19) – Remove CO2 from Air and Turn It into Gasoline",
+    "output": "Hi HN! I’m Rob, Founder of Prometheus. We’re removing CO2 from the air and turning it gasoline, diesel, and jet fuel. Since we use zero-carbon electricity from sources like solar and wind to make our fuel, there are no net CO2 emissions when you use it. An article about us came up on HN recently and people seemed interested ( https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=19792412 ), so we thought it would be good to try to answer some of the questions we saw there and try to dive in some more to any questions that follow! The only inputs to make the fuel are CO2 and water (both from the air) and electricity. The only outputs are fuel and oxygen. One way to think about it is that making fuel is reverse combustion. The process isn’t super efficient (we expect 50-60% overall efficiency at maturity), but it turns out that doesn’t matter as long as the electricity is zero carbon and low cost. If the cost of our equipment is also low, then we believe we can not only make zero carbon fuel, but actually compete on price with fossil fuel. We’re not the first to make fuel from the air - in fact Google, Audi, Carbon Engineering, Global Thermostat, Climeworks, and labs at universities an",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "Show HN: Boring Report, a news app that uses AI to desensationalize the news",
+    "output": "In today&#x27;s world, catchy headlines and articles often distract readers from the facts and relevant information. By utilizing OpenAI&#x27;s language models, Boring Report processes sensationalist news articles, transforms them into the content you see, and helps readers focus on the essential details. We recently updated our iOS app experience, so any and all feedback would be appreciated. App Link: https:&#x2F;&#x2F;apps.apple.com&#x2F;us&#x2F;app&#x2F;boring-report-news-by-ai&#x2F;id644...",
+    "source": "hackernews",
+    "keyword": "AI"
+  },
+  {
+    "input": "Cybersecurity researchers aren't happy about the guardrails on Anthropic's Fable",
+    "output": "https:&#x2F;&#x2F;www.theverge.com&#x2F;ai-artificial-intelligence&#x2F;947973&#x2F;f...",
+    "source": "hackernews",
+    "keyword": "cybersecurity"
+  },
+  {
+    "input": "Assessing Claude Mythos Preview's cybersecurity capabilities",
+    "output": "Related: Project Glasswing: Securing critical software for the AI era - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47679121 System Card: Claude Mythos Preview [pdf] - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47679258 Also: Anthropic&#x27;s Project Glasswing sounds necessary to me - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47681241",
+    "source": "hackernews",
+    "keyword": "cybersecurity"
+  },
+  {
+    "input": "AI cybersecurity is not proof of work",
+    "output": "Recent and related: Cybersecurity looks like proof of work now - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47769089 - (198 comments)",
+    "source": "hackernews",
+    "keyword": "cybersecurity"
+  }
+]

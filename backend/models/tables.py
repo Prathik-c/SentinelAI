@@ -25,3 +25,12 @@ class HealthLog(Base):
     disk = Column(Float)
     top_processes = Column(String, nullable=True)
     idle_seconds = Column(Float, nullable=True)  
+
+    
+class ChatHistory(Base):
+    __tablename__ = "chat_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    timestamp = Column(DateTime, server_default=func.now())
+    question = Column(String)
+    answer = Column(String)

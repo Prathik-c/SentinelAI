@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import HealthMonitor from "./components/HealthMonitor"
 import AlertPanel from "./components/AlertPanel"
+import ChatInterface from "./components/ChatInterface"
 
 export default function App() {
   const [status, setStatus] = useState("checking...")
@@ -23,6 +24,9 @@ export default function App() {
       <HealthMonitor />
       <div className="mt-6">
         <AlertPanel />
+        <div className="mt-6">
+          <ChatInterface />
+        </div>
       </div>
     </div>
   )
