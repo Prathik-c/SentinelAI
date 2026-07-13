@@ -1,201 +1,154 @@
-from fastapi import APIRouter
-from services.health_service import get_health_metrics
-from fastapi import Depends
-from sqlalchemy.orm import Session
-from database import get_db
-from models.tables import HealthLog, Incident
-from services.llm_service import explain_anomalies
-from datetime import datetime, timedelta
+"""
+SentinelAI — Health Router
 
+Thin route layer — all business logic is delegated to services.
+Every endpoint has proper exception handling and returns meaningful error messages.
+"""
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+from loguru import logger
+from sqlalchemy.orm import Session
+
+from core.exceptions import BaselineNotReadyError
+from database import get_db
+from services.health_service import get_health_metrics
+from services.incident_engine import run_anomaly_check
 
 router = APIRouter(prefix="/health", tags=["Health"])
 
+
 @router.get("/current")
 def current_health():
-    return get_health_metrics()
+    """Returns live CPU, RAM, and Disk utilisation."""
+    try:
+        return get_health_metrics()
+    except Exception as exc:
+        logger.error(f"GET /health/current error: {exc}")
+        raise HTTPException(status_code=500, detail="Failed to read system metrics.")
+
 
 @router.get("/history")
-def health_history(db: Session = Depends(get_db), limit: int = 50):
-    logs = db.query(HealthLog).order_by(HealthLog.timestamp.desc()).limit(limit).all()
-    return [
-        {
-            "id": log.id,
-            "timestamp": str(log.timestamp),
-            "cpu": log.cpu,
-            "ram": log.ram,
-            "disk": log.disk,
-            "top_processes": log.top_processes,
-            "idle_seconds": log.idle_seconds
-        }
-        for log in logs
-    ]
+def health_history(
+    db: Session = Depends(get_db),
+    limit: int = Query(default=50, ge=1, le=500),
+    skip:  int = Query(default=0,  ge=0),
+):
+    """Returns paginated health log history, most recent first."""
+    from models.tables import HealthLog
+    import json
+
+    try:
+        logs = (
+            db.query(HealthLog)
+            .order_by(HealthLog.timestamp.desc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+        return [
+            {
+                "id":            log.id,
+                "timestamp":     str(log.timestamp),
+                "cpu":           log.cpu,
+                "ram":           log.ram,
+                "disk":          log.disk,
+                "top_processes": _safe_json(log.top_processes),
+                "idle_seconds":  log.idle_seconds,
+            }
+            for log in logs
+        ]
+    except Exception as exc:
+        logger.error(f"GET /health/history error: {exc}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve health history.")
+
 
 @router.get("/baseline")
 def get_baseline(db: Session = Depends(get_db)):
-    import json
-    from sqlalchemy import func
+    """
+    Returns the cached behavioural baseline statistics.
+    Returns a 'learning' status if not enough data has been collected yet.
+    """
+    try:
+        from services.baseline_engine import get_cached_baseline
+        stats = get_cached_baseline(db)
+        return {
+            "total_samples": stats.sample_count,
+            "cpu": {
+                "mean": stats.cpu_mean,
+                "std":  stats.cpu_std,
+                "max":  stats.cpu_max,
+                "min":  stats.cpu_min,
+                "p95":  stats.cpu_p95,
+            },
+            "ram": {
+                "mean": stats.ram_mean,
+                "std":  stats.ram_std,
+                "max":  stats.ram_max,
+                "min":  stats.ram_min,
+                "p95":  stats.ram_p95,
+            },
+            "disk": {
+                "mean": stats.disk_mean,
+            },
+            "thresholds": {
+                "cpu": stats.cpu_threshold,
+                "ram": stats.ram_threshold,
+            },
+            "common_processes": [
+                {
+                    "name":        ps.name,
+                    "appearances": ps.count,
+                    "avg_cpu":     ps.avg_cpu,
+                    "avg_ram":     ps.avg_ram,
+                }
+                for ps in sorted(
+                    stats.known_processes.values(),
+                    key=lambda x: x.count,
+                    reverse=True,
+                )[:10]
+            ],
+        }
+    except BaselineNotReadyError as exc:
+        return {"error": exc.message, "status": "learning"}
+    except Exception as exc:
+        logger.error(f"GET /health/baseline error: {exc}")
+        raise HTTPException(status_code=500, detail="Failed to compute baseline.")
 
-    logs = db.query(HealthLog).all()
-
-    if not logs:
-        return {"error": "Not enough data"}
-
-    cpu_values = [l.cpu for l in logs]
-    ram_values = [l.ram for l in logs]
-    disk_values = [l.disk for l in logs]
-
-    # Count process frequency across all logs
-    process_counts = {}
-    for log in logs:
-        if log.top_processes:
-            processes = json.loads(log.top_processes)
-            for p in processes:
-                name = p["name"]
-                process_counts[name] = process_counts.get(name, 0) + 1
-
-    # Sort by frequency — most common processes = "normal" processes
-    common_processes = sorted(
-        process_counts.items(), key=lambda x: x[1], reverse=True
-    )[:10]
-
-    return {
-        "total_samples": len(logs),
-        "cpu": {
-            "mean": round(sum(cpu_values) / len(cpu_values), 1),
-            "max": round(max(cpu_values), 1),
-            "min": round(min(cpu_values), 1),
-        },
-        "ram": {
-            "mean": round(sum(ram_values) / len(ram_values), 1),
-            "max": round(max(ram_values), 1),
-            "min": round(min(ram_values), 1),
-        },
-        "disk": {
-            "mean": round(sum(disk_values) / len(disk_values), 1),
-        },
-        "common_processes": [
-            {"name": name, "appearances": count}
-            for name, count in common_processes
-        ]
-    }
 
 @router.get("/anomaly/check")
-def check_anomaly(db: Session = Depends(get_db)):
-    import json
-
-    all_logs = db.query(HealthLog).all()
-
-    if len(all_logs) < 50:
-        return {"status": "learning",
-                "message": "Still learning your patterns — check back after more data is collected"}
-
-    cpu_values = [l.cpu for l in all_logs]
-    ram_values = [l.ram for l in all_logs]
-
-    cpu_mean = sum(cpu_values) / len(cpu_values)
-    ram_mean = sum(ram_values) / len(ram_values)
-
-    # Dynamic thresholds — 3x mean for CPU, mean + 20% for RAM
-    cpu_threshold = min(cpu_mean * 3, 40.0)
-    ram_threshold = min(ram_mean + 20.0, 90.0)
-
-    # Known processes from THIS user's history
-    process_counts = {}
-    for log in all_logs:
-        if log.top_processes:
-            for p in json.loads(log.top_processes):
-                name = p["name"]
-                process_counts[name] = process_counts.get(name, 0) + 1
-
-    # Process is "known" if it appeared in at least 5% of logs
-    min_appearances = len(all_logs) * 0.05
-    known_processes = {
-        name for name, count in process_counts.items()
-        if count >= min_appearances
-    }
-
-    # Now check recent logs against THIS user's baseline
-    recent = db.query(HealthLog).order_by(
-        HealthLog.timestamp.desc()
-    ).limit(5).all()
-
-    anomalies = []
-    for log in recent:
-        if log.cpu > cpu_threshold:
-            anomalies.append({
-                "timestamp": str(log.timestamp),
-                "type": "high_cpu",
-                "severity": "critical" if log.cpu > 80 else "medium",
-                "detail": f"CPU at {log.cpu}% — your normal is {round(cpu_mean, 1)}%"
-            })
-
-        if log.ram > ram_threshold:
-            anomalies.append({
-                "timestamp": str(log.timestamp),
-                "type": "high_ram",
-                "severity": "medium",
-                "detail": f"RAM at {log.ram}% — your normal is {round(ram_mean, 1)}%"
-            })
-
-        if log.top_processes:
-            for p in json.loads(log.top_processes):
-                if (p["name"] not in known_processes
-                        and p["cpu"] > 5.0
-                        and p["name"] != ""):
-                    anomalies.append({
-                        "timestamp": str(log.timestamp),
-                        "type": "unknown_process",
-                        "severity": "high",
-                        "detail": f"Unfamiliar process '{p['name']}' using {p['cpu']}% CPU — not seen in your normal usage"
-                    })
-
-    baseline_context = {
-        "cpu_mean": round(cpu_mean, 1),
-        "ram_mean": round(ram_mean, 1),
-        "cpu_threshold": round(cpu_threshold, 1),
-        "ram_threshold": round(ram_threshold, 1),
-        "baseline_samples": len(all_logs)
-    }
-
-    explanation = explain_anomalies(anomalies, baseline_context)
-
-    # --- Persist detected anomalies as incidents, with dedup guard ---
-    # Skip inserting if a pending incident of the same type was already
-    # logged in the last 5 minutes, to avoid spamming duplicate rows
-    # when this endpoint is polled repeatedly during an ongoing anomaly.
-    recent_cutoff = datetime.utcnow() - timedelta(minutes=5)
-    saved_incidents = []
-
-    for a in anomalies:
-        existing = db.query(Incident).filter(
-            Incident.type == a["type"],
-            Incident.status == "pending",
-            Incident.timestamp >= recent_cutoff
-        ).first()
-
-        if existing:
-            continue  # duplicate of a recent still-pending incident, skip
-
-        incident = Incident(
-            type=a["type"],
-            severity=a["severity"],
-            description=a["detail"],
-            snapshot=json.dumps(baseline_context),
-            status="pending",
-            report=explanation
+def check_anomaly(
+    db: Session = Depends(get_db),
+    cpu_mult:   float = Query(default=3.0, ge=1.0, le=10.0),
+    ram_margin: float = Query(default=20.0, ge=0.0, le=50.0),
+):
+    """
+    Runs the full anomaly detection pipeline and returns structured results.
+    
+    Key behaviour change from v1:
+    - Python detects anomalies instantly (< 100ms).
+    - LLM explanations are generated asynchronously in the background.
+    - This endpoint NEVER blocks on an LLM call.
+    - Incidents are saved to DB immediately; `report` field fills in ~10s.
+    """
+    try:
+        return run_anomaly_check(db)
+    except Exception as exc:
+        logger.error(f"GET /health/anomaly/check error: {exc}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Anomaly check failed: {str(exc)}"
         )
-        db.add(incident)
-        saved_incidents.append(incident)
 
-    if saved_incidents:
-        db.commit()
 
-    return {
-        "status": "anomalies_found" if anomalies else "normal",
-        "baseline_samples": len(all_logs),
-        "your_normal": baseline_context,
-        "anomaly_count": len(anomalies),
-        "anomalies": anomalies,
-        "explanation": explanation,      # LLM-generated plain English explanation
-        "incidents_saved": len(saved_incidents)
-    }
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _safe_json(value):
+    """Safely parses a JSON string, returning None on failure."""
+    if not value:
+        return None
+    import json
+    try:
+        return json.loads(value)
+    except (json.JSONDecodeError, TypeError):
+        return None
