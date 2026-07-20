@@ -46,3 +46,21 @@ frontend/dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Python build
+*.egg-info/
+
+# Training datasets
+finetune/training_data*.jsonl
+
+# Logs
+logs/
+
+# Cache
+__pycache__/
+*.pyc
