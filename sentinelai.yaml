@@ -1,0 +1,30 @@
+# SentinelAI Configuration
+
+ollama:
+  base_url: "http://localhost:11434"
+  chat_model: "mistral:7b"
+  report_model: "mistral:7b"
+  timeout_seconds: 60
+  keep_alive: "24h"
+  executor_threads: 2
+  semaphore_limit: 2
+
+database:
+  path: "./data/sentinelai.db"
+  max_rows: 100000
+  backup_retention_days: 7
+
+logging:
+  level: "INFO"
+  dir: "./logs"
+
+system:
+  health_interval_seconds: 15
+  idle_timeout_seconds: 300
+
+behavior:
+  anomaly_engine_interval: 60
+  baseline_days: 7
+
+web:
+  port: 8000
